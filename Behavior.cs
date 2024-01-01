@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,21 @@ namespace OpenEnv
         /// 任务行为的具体行为树
         /// </summary>
         CodeImplements.Statement TopmostStatement { get; set; }
+
+        public string ToSQL()
+        {
+            var binary = ExtraConvert.SerializeObject(TopmostStatement);
+            var fileName = $@"{Application.StartupPath}\Codes\{new Random().Next(114514, 8888888)}.cde";
+            StreamWriter writer = new StreamWriter(fileName);
+
+            writer.Write(binary);
+            writer.Flush();
+            writer.Close();
+
+            
+            Expression<Func<string>> buildExpression = () => string.Concat(string.Concat(string.Concat(string.Concat(string.Concat(string.Concat("INSERT INTO tb_Behaviors(Name,Description,Type,Start,Delta,Trigger,Lang) VALUES (" + $"'{BehaviorName}',", $"'{BehaviorDescription}',"), $"{(int)Interval!.BehaviorType},"), $"{Interval!.StartTime.ToFileTimeUtc()},"), $"{Interval!.DeltaTime},"), $"{Interval!.TriggerTime.ToFileTimeUtc()},"), $"'{fileName}')");
+            return buildExpression.Compile()().ToString();
+        }
     }
 
     internal class Interval
@@ -35,22 +51,22 @@ namespace OpenEnv
         /// <summary>
         /// 任务计划的类型
         /// </summary>
-        DataType.BehaviorType BehaviorType { get; set; }
+        public DataType.BehaviorType BehaviorType { get; set; }
 
         /// <summary>
         /// 计划任务的开始时间
         /// </summary>
-        DateTime StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         /// <summary>
         /// 计划任务的重复周期
         /// </summary>
-        int DeltaTime { get; set; }
+        public int DeltaTime { get; set; }
 
         /// <summary>
         /// 计划任务的触发时间
         /// </summary>
-        DateTime TriggerTime { get; set; }
+        public DateTime TriggerTime { get; set; }
 
         /// <summary>
         /// 重写时间的字符串转换方法
@@ -67,8 +83,7 @@ namespace OpenEnv
                 DataType.BehaviorType.OnClock => $"从{StartTime.ToString("G")}，每隔{DeltaTime}分钟",
                 DataType.BehaviorType.OnTrigger => $"从{StartTime.ToString("G")}，每当{TriggerTime.ToString("HH:mm:ss")}",
                 _ => throw new NotImplementedException()
-            };
-                
+            };   
         }
     }
 }

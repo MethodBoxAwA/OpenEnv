@@ -10,7 +10,6 @@ namespace OpenEnv
 {
     internal class DataBase
     {
-
         protected OleDbConnection Connection { get; set; }
 
         /// <summary>

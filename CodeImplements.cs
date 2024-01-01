@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * @Author 拟南芥
+ * @Time 2024/1/1
+ * @Description 代码执行相关类
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +30,7 @@ namespace OpenEnv
         /// <summary>
         /// 表示语句
         /// </summary>
+        [Serializable]
         internal class Statement : IGenericExecutable
         {
             public string Name { get; set; } = "if";
@@ -46,6 +53,7 @@ namespace OpenEnv
         /// <summary>
         /// 表示方法
         /// </summary>
+        [Serializable]
         internal class Method : IGenericExecutable
         {
             public string Name { get; set; } = "Exit";
@@ -63,6 +71,7 @@ namespace OpenEnv
         /// <summary>
         /// 表示直接的动作或关键字
         /// </summary>
+        [Serializable]
         internal class Verb : IGenericExecutable
         {
             public string Name { get; set; } = "run";
