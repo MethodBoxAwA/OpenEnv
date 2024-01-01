@@ -10,8 +10,10 @@ namespace OpenEnv
     {
         internal enum BehaviorType
         {
+            Signal,
             OnStart,
             OnClock,
+            OnTrigger,
             OnShutDown
         }
     }
