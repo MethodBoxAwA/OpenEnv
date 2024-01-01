@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="SunnyUI" Version="3.6.2" />
+    <PackageReference Include="System.Data.OleDb" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

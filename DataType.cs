@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*
+ * @Author 拟南芥
+ * @Time 2023/12/31
+ * @Description 用于存储数据类型的类
+ */
 
 namespace OpenEnv
 {
